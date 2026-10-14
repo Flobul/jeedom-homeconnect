@@ -11,53 +11,73 @@
       <input type="text" class="input-sm in_value form-control" value="#state# #unite#" disabled/>
       <span class="input-group-btn" style="position: relative;">
         <a class="btn btn-default btn-sm bt_plus roundedLeft"><i class="fas fa-step-forward"></i></a>
-        <a class="btn btn-default btn-sm bt_fastplus roundedRight"><i class="fa fa-fast-forward"></i></a>
+        <a class="btn btn-default btn-sm bt_fastplus roundedRight"><i class="fas fa-fast-forward"></i></a>
       </span>
     </div>
   </div>
   <script>
-    $('.cmd[data-cmd_uid=#uid#] .bt_fastplus').on('click', function () {
-      var max = ('#maxValue#' == '') ?  Number.MAX_VALUE : parseFloat('#maxValue#');
-      var step = (isNaN(parseFloat('#bigstep#'))) ?  300 : parseFloat('#bigstep#');
-      if (parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) <= max - step ){
-        jeedom.cmd.update['#id#']({display_value:parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) + step});
-        $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
-      }
-    });
-    $('.cmd[data-cmd_uid=#uid#] .bt_plus').on('click', function () {
-      var max = ('#maxValue#' == '') ?  Number.MAX_VALUE : parseFloat('#maxValue#');
-      var step = (isNaN(parseFloat('#step#'))) ?  0.5 : parseFloat('#step#');
-      if (parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) <= max - step ){
-        jeedom.cmd.update['#id#']({display_value:parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) + step});
-        $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
-      }
-    });
-    $('.cmd[data-cmd_uid=#uid#] .bt_minus').on('click', function () {
-      var min = ('#minValue#' == '') ? Number.MIN_VALUE : parseFloat('#minValue#');
-      var step = (isNaN(parseFloat('#step#'))) ?  0.5 : parseFloat('#step#');
-      if (parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) >= min + step){
-        jeedom.cmd.update['#id#']({display_value:parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) - step});
-        $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
-      }
-    });
-    $('.cmd[data-cmd_uid=#uid#] .bt_fastminus').on('click', function () {
-      var min = ('#minValue#' == '') ? Number.MIN_VALUE : parseFloat('#minValue#');
-      var step = (isNaN(parseFloat('#bigstep#'))) ?  300 : parseFloat('#bigstep#');
-      if (parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) >= min + step){
-        jeedom.cmd.update['#id#']({display_value:parseFloat($('.cmd[data-cmd_uid=#uid#] .in_value').val()) - step});
-        $('.cmd[data-cmd_uid=#uid#] .in_value').trigger('change');
-      }
-    });
-    $('.cmd[data-cmd_uid=#uid#] .in_value').on('change', function () {
-      if (typeof timerHandle#uid# !== 'undefined') {
-        clearTimeout(timerHandle#uid#);
-      }
-      timerHandle#uid# = setTimeout(function() {
-        jeedom.cmd.execute({id:'#id#', value: {slider: $('.cmd[data-cmd_uid=#uid#] .in_value').val().replace("#unite#", "").replace(" ", "")}});
-      }, 1000)
-    });
+    var _cmdUid = '#uid#';
+    var _cmdId = '#id#';
+    var _maxValue = ('#maxValue#' == '') ?  Number.MAX_VALUE : parseFloat('#maxValue#');
+    var _bigstep = (isNaN(parseFloat('#bigstep#'))) ?  300 : parseFloat('#bigstep#');
+    var _step = (isNaN(parseFloat('#step#'))) ?  0.5 : parseFloat('#step#');
+    var _minValue = ('#minValue#' == '') ? Number.MIN_VALUE : parseFloat('#minValue#');
+    var _unite = '#unite#';
+
+    var btFastPlus = document.querySelector('.cmd[data-cmd_uid="' + _cmdUid + '"] .bt_fastplus');
+    var btPlus = document.querySelector('.cmd[data-cmd_uid="' + _cmdUid + '"] .bt_plus');
+    var btMinus = document.querySelector('.cmd[data-cmd_uid="' + _cmdUid + '"] .bt_minus');
+    var btFastMinus = document.querySelector('.cmd[data-cmd_uid="' + _cmdUid + '"] .bt_fastminus');
+    var inValue = document.querySelector('.cmd[data-cmd_uid="' + _cmdUid + '"] .in_value');
+
+    var timerHandle#uid#;
+
+    function _getVal() {
+      return parseFloat(inValue ? inValue.value.replace(_unite, "").replace(" ", "") : "0");
+    }
+
+    if (btFastPlus) {
+      btFastPlus.addEventListener('click', function () {
+        if (_getVal() <= _maxValue - _bigstep) {
+          jeedom.cmd.update[_cmdId]({display_value: _getVal() + _bigstep});
+        }
+      });
+    }
+    if (btPlus) {
+      btPlus.addEventListener('click', function () {
+        if (_getVal() <= _maxValue - _step) {
+          jeedom.cmd.update[_cmdId]({display_value: _getVal() + _step});
+        }
+      });
+    }
+    if (btMinus) {
+      btMinus.addEventListener('click', function () {
+        if (_getVal() >= _minValue + _step) {
+          jeedom.cmd.update[_cmdId]({display_value: _getVal() - _step});
+        }
+      });
+    }
+    if (btFastMinus) {
+      btFastMinus.addEventListener('click', function () {
+        if (_getVal() >= _minValue + _bigstep) {
+          jeedom.cmd.update[_cmdId]({display_value: _getVal() - _bigstep});
+        }
+      });
+    }
+    if (inValue) {
+      inValue.addEventListener('change', function () {
+        if (typeof timerHandle#uid# !== 'undefined') {
+          clearTimeout(timerHandle#uid#);
+        }
+        timerHandle#uid# = setTimeout(function() {
+          jeedom.cmd.execute({id: _cmdId, value: {slider: inValue.value.replace(_unite, "").replace(" ", "")}});
+        }, 1000);
+      });
+    }
     jeedom.cmd.update['#id#'] = function(_options){
-      $('.cmd[data-cmd_uid=#uid#] .in_value').val(_options.display_value+' #unite#');
+      if (inValue) {
+        inValue.value = _options.display_value + ' ' + _unite;
+      }
     }
     jeedom.cmd.update['#id#']({display_value:'#state#'});
   </script>

@@ -1,12 +1,12 @@
 <?php
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accès non autorisé}}');
+	throw new Exception(__('401 - Accès non autorisé', __FILE__));
 }
 $plugin = plugin::byId('homeconnect');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 ?>
-
+<link rel="stylesheet" href="core/php/getResource.php?file=/plugins/homeconnect/desktop/css/homeconnect.css">
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
 		<legend><i class="fas fa-cog"></i>	{{Gestion}}</legend>
@@ -22,7 +22,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<span>{{Configuration}}</span>
 			</div>
 			<div class="cursor logoSecondary" id="bt_healthHomeConnect">
-				<i class="fas fa-medkit"></i>
+				<i class="fas fa-heartbeat"></i>
 				<br />
 				<span>{{Santé}}</span>
 			</div>

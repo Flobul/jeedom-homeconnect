@@ -1,0 +1,357 @@
+/* Bandeaux Configuration et Santé : trame de LocalHomeConnect. */
+#configuration_plugin_homeconnect .homeconnect-config-page {
+    --homeconnect-accent: #168db5;
+    --homeconnect-accent-dark: #17617d;
+    --homeconnect-blue: #1987ea;
+    --homeconnect-green: #78b600;
+    --homeconnect-card-border: rgba(127, 127, 127, 0.22);
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 12px 8px 32px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 28px 30px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(125deg, #4638f0 0%, #FFFFFF 100%);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-hero::after {
+    position: absolute;
+    top: -90px;
+    right: -60px;
+    width: 260px;
+    height: 260px;
+    border: 48px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    content: '';
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-identity,
+#configuration_plugin_homeconnect .homeconnect-config-meta,
+#configuration_plugin_homeconnect .homeconnect-config-links {
+    position: relative;
+    z-index: 1;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-identity {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-logo {
+    width: 109px;
+    height: 109px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-logo img {
+    display: block !important;
+    width: auto !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin: auto !important;
+    object-fit: contain;
+    transform: translateY(6%);
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-eyebrow {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.82;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-hero h2 {
+    margin: 0 0 5px;
+    color: #fff !important;
+    font-size: 27px;
+    font-weight: 700;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-hero p {
+    max-width: 680px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 14px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-meta span {
+    padding: 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.12);
+    font-size: 12px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-meta i {
+    margin-right: 5px;
+    opacity: 0.85;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-links .btn {
+    color: #fff !important;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-links .btn:hover {
+    color: #fff !important;
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-link-changelog {
+    border-color: #1474c9 !important;
+    background: #1987ea !important;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-link-documentation {
+    border-color: #659b00 !important;
+    background: #78b600 !important;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-link-community {
+    border-color: #6250bb !important;
+    background: #7564d5 !important;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-logo { flex: 0 0 109px; }
+#configuration_plugin_homeconnect .homeconnect-config-identity > div:last-child { min-width: 0; overflow-wrap: anywhere; }
+#configuration_plugin_homeconnect .homeconnect-config-hero::after { pointer-events: none; }
+#configuration_plugin_homeconnect .homeconnect-config-links a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (max-width: 560px) {
+    #configuration_plugin_homeconnect .homeconnect-config-page { padding-right: 2px; padding-left: 2px; }
+    #configuration_plugin_homeconnect .homeconnect-config-hero { padding: 22px 18px; border-radius: 12px; }
+    #configuration_plugin_homeconnect .homeconnect-config-identity { align-items: flex-start; }
+    #configuration_plugin_homeconnect .homeconnect-config-logo { flex-basis: 58px; width: 58px; height: 58px; padding: 6px; border-radius: 15px; }
+    #configuration_plugin_homeconnect .homeconnect-config-hero h2 { font-size: 22px; }
+}
+
+#homeconnect-health-banner.homeconnect-health-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    overflow: hidden;
+    min-height: 112px;
+    padding: 22px 24px;
+    border-radius: 16px;
+    color: #fff;
+    background: linear-gradient(125deg, #4638f0 0%, #FFFFFF 100%);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+#homeconnect-health-banner.homeconnect-health-hero::after {
+    position: absolute;
+    top: -86px;
+    right: 12%;
+    width: 230px;
+    height: 230px;
+    border: 42px solid rgba(255, 255, 255, 0.09);
+    border-radius: 50%;
+    content: '';
+    pointer-events: none;
+}
+
+#homeconnect-health-banner .homeconnect-health-hero-icon,
+#homeconnect-health-banner .homeconnect-health-hero-copy,
+#homeconnect-health-banner .homeconnect-health-refresh {
+    position: relative;
+    z-index: 1;
+}
+
+#homeconnect-health-banner .homeconnect-health-hero-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 17px;
+    background: rgba(0, 0, 0, 0.12);
+    font-size: 29px;
+}
+
+#homeconnect-health-banner .homeconnect-health-eyebrow {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.82;
+}
+
+#homeconnect-health-banner.homeconnect-health-hero h2 {
+    margin: 0 0 4px;
+    color: #fff !important;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+#homeconnect-health-banner.homeconnect-health-hero p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88) !important;
+    font-size: 13px;
+}
+
+#homeconnect-health-banner .homeconnect-health-refresh {
+    padding: 9px 13px;
+    border: 1px solid rgba(255, 255, 255, 0.36) !important;
+    border-radius: 9px;
+    color: #fff !important;
+    background: rgba(0, 0, 0, 0.15) !important;
+    font-weight: 600;
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+#homeconnect-health-banner .homeconnect-health-refresh:hover {
+    background: rgba(0, 0, 0, 0.24) !important;
+    transform: translateY(-1px);
+}
+
+#homeconnect-health-banner.homeconnect-health-hero { box-sizing: border-box; width: 100%; max-width: 1320px; margin: 0 auto 16px; }
+#homeconnect-health-banner .homeconnect-health-hero-copy { min-width: 0; overflow-wrap: anywhere; }
+#homeconnect-health-banner .homeconnect-health-refresh:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (max-width: 760px) {
+    #homeconnect-health-banner.homeconnect-health-hero { grid-template-columns: auto minmax(0, 1fr); padding: 18px; }
+    #homeconnect-health-banner .homeconnect-health-hero-icon { width: 48px; height: 48px; border-radius: 13px; font-size: 22px; }
+    #homeconnect-health-banner.homeconnect-health-hero h2 { font-size: 19px; }
+    #homeconnect-health-banner .homeconnect-health-refresh { grid-column: 1 / -1; width: 100%; }
+}
+
+/* ===== Dark theme ===== */
+[data-theme="core2019_Dark"] .homeconnect-config-hero::after {
+    border: 48px solid rgba(255, 255, 255, 0.05);
+}
+[data-theme="core2019_Dark"] .homeconnect-config-meta span {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+[data-theme="core2019_Dark"] .homeconnect-health-hero::after {
+    border: 42px solid rgba(255, 255, 255, 0.05);
+}
+[data-theme="core2019_Dark"] .homeconnect-health-hero-icon {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+}
+[data-theme="core2019_Dark"] .homeconnect-health-refresh {
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-card {
+    margin-top: 16px;
+    overflow: hidden;
+    border: 1px solid var(--homeconnect-card-border);
+    border-radius: 14px;
+    background: rgba(127, 127, 127, 0.08);
+    box-shadow: 0 5px 16px rgba(35, 55, 70, 0.07);
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-card-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--homeconnect-card-border);
+    background: linear-gradient(90deg, rgba(22, 141, 181, 0.12), rgba(22, 141, 181, 0.025));
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-card-header > i {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    background: var(--homeconnect-accent);
+    color: #fff;
+    font-size: 18px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-card-header h3 {
+    margin: 0 0 3px;
+    font-size: 17px;
+    font-weight: 650;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-card-header p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-card-body {
+    padding: 20px 18px 8px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-login-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#configuration_plugin_homeconnect .control-label {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#configuration_plugin_homeconnect #textRedirectUriHomeconnect {
+    font-style: italic;
+}
+
+#configuration_plugin_homeconnect input[type="checkbox"].configKey {
+    width: 18px;
+    height: 18px;
+}
+
+/* Harmonisation de l’alignement des métadonnées (trame Creality Box). */
+#configuration_plugin_homeconnect .homeconnect-config-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px 28px;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-meta {
+    align-self: center;
+    justify-content: flex-end;
+    margin-top: 0;
+}
+
+#configuration_plugin_homeconnect .homeconnect-config-links {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 760px) {
+    #configuration_plugin_homeconnect .homeconnect-config-hero {
+        grid-template-columns: 1fr;
+    }
+
+    #configuration_plugin_homeconnect .homeconnect-config-meta {
+        justify-content: flex-start;
+    }
+}

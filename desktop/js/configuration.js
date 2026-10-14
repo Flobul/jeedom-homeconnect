@@ -20,8 +20,8 @@ function homeconnectAjax(data, successCallback, errorCallback) {
 var divPluginConfiguration = document.getElementById('configuration_plugin_homeconnect');
 if (divPluginConfiguration) {
     divPluginConfiguration.addEventListener('change', function(event) {
-        var target = event.target;
-        if (_target = event.target.closest('.configKey[data-l1key=demo_mode]')) {
+        var _target = event.target.closest('.configKey[data-l1key=demo_mode]');
+        if (_target) {
             if (_target.checked) {
                 document.getElementById('bt_loginDemoHomeConnect').style.display = 'inline-block';
                 document.getElementById('bt_loginHomeConnect').style.display = 'none';
@@ -122,6 +122,7 @@ function printPluginConfiguration() {
     var configInputs    = divPluginLGConfiguration.querySelectorAll('.configKey');
     var modificationCount = 0;
     var initialValues   = new Map();
+    var baselineReady = false;
 
     var modificationMessage = document.createElement('i');
     modificationMessage.classList.add('modificationWithoutSave', 'label', 'label-warning', 'pull-right');
@@ -147,18 +148,18 @@ function printPluginConfiguration() {
         }
     }
 
-    configInputs.forEach(function(input) {
-        resetStyle(input);
-        if (input.type === 'checkbox') {
-            initialValues.set(input, input.checked);
-        } else {
-            initialValues.set(input, input.value);
-        }
-    });
+    window.setTimeout(function() {
+        configInputs.forEach(function(input) {
+            resetStyle(input);
+            initialValues.set(input, input.type === 'checkbox' ? input.checked : input.value);
+        });
+        baselineReady = true;
+    }, 500);
 
     configInputs.forEach(function(input) {
         if (input.type === 'checkbox') {
             input.addEventListener('change', function() {
+                if (!baselineReady) return;
                 var initialValue = initialValues.get(this);
                 var isModified   = this.checked !== initialValue;
                 if (isModified && !this.hasAttribute('data-modified')) {
@@ -175,6 +176,7 @@ function printPluginConfiguration() {
         } else {
             var eventType = input.nodeName === 'SELECT' ? 'change' : 'input';
             input.addEventListener(eventType, function() {
+                if (!baselineReady) return;
                 var initialValue = initialValues.get(this);
                 var isModified   = this.value !== initialValue;
                 if (isModified && !this.hasAttribute('data-modified')) {

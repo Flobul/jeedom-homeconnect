@@ -1,0 +1,30 @@
+/**
+ * CSS du plugin homeconnect — Desktop (page d'accueil).
+ *
+ * Reference : localhomeconnect (desktop/css/localhomeconnect.css)
+ * https://github.com/DomoFlo1/jeedom-localhomeconnect
+ *
+ * Styles pour la page d'accueil du plugin.
+ */
+.eqLogicThumbnailDisplay .panel-title {
+    background: #0064C7;
+    border-radius: 10px;
+}
+[data-theme="core2019_Dark"] .eqLogicThumbnailDisplay .panel-title {
+    background: #0064C7;
+}
+.logoPrimaryHomeconnect {
+    color: #0064C7;
+}
+[data-theme="core2019_Dark"] .logoPrimaryHomeconnect {
+    color: #4DA3F1;
+}
+.eqLogicDisplayCard {
+    transition: box-shadow 0.3s ease;
+}
+.eqLogicDisplayCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+[data-theme="core2019_Dark"] .eqLogDisplayCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
