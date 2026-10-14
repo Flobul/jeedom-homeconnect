@@ -1125,6 +1125,38 @@
     "plugins\/homeconnect\/core\/php\/callback.php": {
         "Code d\\'autorisation manquant": "Codice di autorizzazione mancante"
     },
+    "plugins\/homeconnect\/core\/template\/dashboard\/cmd.info.numeric.duree.html": {
+        "Valeur du": "Valore del",
+        "collectée le": "raccolta il",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
+    "plugins\/homeconnect\/core\/template\/dashboard\/cmd.info.numeric.dureev3.html": {
+        "Valeur du": "Valore del",
+        "collectée le": "raccolta il",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
+    "plugins\/homeconnect\/core\/template\/mobile\/cmd.info.numeric.duree.html": {
+        "Valeur du": "Valore del",
+        "collectée le": "raccolta il",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
+    "plugins\/homeconnect\/core\/template\/mobile\/cmd.info.numeric.dureev3.html": {
+        "Valeur du": "Valore del",
+        "collectée le": "raccolta il",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
     "plugins\/homeconnect\/desktop\/js\/configuration.js": {
         "Connexion au compte HomeConnect réussie.": "Accesso all'account HomeConnect effettuato con successo.",
         "Connexion en cours...": "Accesso in corso...",
@@ -1138,6 +1170,9 @@
         "Se connecter": "Connettiti",
         "Vous allez être redirigé vers HomeConnect pour autoriser l\\'accès de Jeedom à votre compte.": "Verrai reindirizzato a HomeConnect per autorizzare l'accesso di Jeedom al tuo account.",
         "effectuée": "realizzato"
+    },
+    "plugins\/homeconnect\/desktop\/js\/health.js": {
+        "Santé Home Connect": "Salute Casa Connect"
     },
     "plugins\/homeconnect\/desktop\/js\/homeconnect.js": {
         "Afficher": "Mostra",
@@ -1199,11 +1234,28 @@
         "Value": "Valore"
     },
     "plugins\/homeconnect\/desktop\/modal\/health.php": {
+        "401 - Accès non autorisé": "401 - Accesso non autorizzato",
         "Appareil": "Dispositivo",
+        "Appareils": "Dispositivi",
+        "Aucun appareil Home Connect": "Nessun dispositivo Home Connect",
         "Connecté": "Connecté",
-        "Nombre de requêtes envoyées aujourd'hui": "Numero di richieste inviate oggi",
+        "Connectés": "Connessi",
+        "Connexion des appareils, programmes actifs et suivi des requêtes Home Connect.": "Connessione dei dispositivi, programmi attivi e monitoraggio delle richieste Home Connect.",
+        "Diagnostic du plugin": "Diagnosi del plugin",
+        "Non": "No",
+        "Oui": "Sì",
         "Programme actif": "Programma attivo",
-        "Type": "Tipo"
+        "Programmes actifs": "Programmi attivi",
+        "Rafraîchir": "Aggiorna",
+        "Requêtes aujourd'hui": "Richieste di oggi",
+        "Résumé de la santé Home Connect": "Riepilogo dello stato di Home Connect",
+        "Santé Home Connect": "Salute Casa Connect",
+        "Type": "Tipo",
+        "appareil(s) en cours": "dispositivo\/i in funzione",
+        "configuré(s)": "configurato\/i",
+        "déconnecté(s)": "disconnesso\/i",
+        "sur 1000": "su 1000",
+        "Équipements": "Apparecchiature"
     },
     "plugins\/homeconnect\/desktop\/php\/homeconnect.php": {
         "401 - Accès non autorisé": "401 - Accesso non autorizzato",
@@ -1241,34 +1293,38 @@
         "Visible": "Visibile"
     },
     "plugins\/homeconnect\/plugin_info\/configuration.php": {
-        "Ajoute les programmes actifs et sélectionnés à la liste, qu'ils soient supportées ou non par l'API": "Aggiunge all'elenco i programmi attivi e selezionati, indipendentemente dal fatto che siano o meno supportati dall'API",
+        "Ajoute les programmes actifs et sélectionnés à la liste, qu’ils soient supportés ou non par l’API.": "Aggiunge all'elenco i programmi attivi e selezionati, indipendentemente dal fatto che siano supportati o meno dall'API.",
         "Appareils réels": "Dispositivi reali",
+        "Application Home Connect et authentification": "App Home Connect e autenticazione",
         "Aucune": "Aucune",
         "Auto-actualisation (cron)": "Aggiornamento automatico (cron)",
-        "Branche": "Ramo",
-        "Cette URL sera demandée sur le site Home Connect pour la création des identifiants (https:\/\/developer.home-connect.com\/applications\/add)": "Questo URL sarà richiesto sul sito Home Connect per la creazione di identificatori (https:\/\/developer.home-connect.com\/applications\/add)",
+        "Cette URL sera demandée sur le site Home Connect pour la création des identifiants.": "Questo URL verrà richiesto sul sito Home Connect per la creazione delle credenziali.",
         "Changelog": "Changelog",
+        "Choisissez la pièce par défaut et la fréquence de synchronisation des appareils.": "Scegliere la stanza predefinita e la frequenza di sincronizzazione dei dispositivi.",
         "Client ID": "ID cliente",
         "Client ID pour le mode démo": "ID cliente per la modalità demo",
         "Client Secret": "Segreto del cliente",
-        "Cochez la case pour n'avoir qu'une seule commande select pour afficher l'ensemble des programmes": "Spuntare la casella per avere un unico comando di selezione per visualizzare tutti i programmi",
+        "Cochez la case pour n’avoir qu’une seule commande select regroupant l’ensemble des programmes.": "Selezionare la casella per avere un unico comando \"select\" che raggruppi tutti i programmi.",
+        "Communauté": "Comunità",
+        "Configuration du plugin": "Configurazione del plugin",
+        "Connectez vos appareils Home Connect à Jeedom et pilotez-les depuis votre compte.": "Collega i tuoi dispositivi Home Connect a Jeedom e controllali dal tuo account.",
+        "Contrôlez la création et le regroupement des programmes exposés dans Jeedom.": "Gestisci la creazione e il raggruppamento dei programmi presenti in Jeedom.",
         "Création de l'application Jeedom sur le site Home Connect": "Creazione dell'applicazione Jeedom sul sito web di Home Connect",
-        "Création des identifiants (https:\/\/developer.home-connect.com\/applications\/add)": "Creazione di identificatori (https:\/\/developer.home-connect.com\/applications\/add)",
         "Créer Application": "Creare un'applicazione",
         "Documentation": "Documentazione",
         "Démo (Simulateurs)": "Demo (Simulatori)",
         "Force l'ajout de tous les programmes": "Forzare l'aggiunta di tutti i programmi",
         "Génère les programmes dans une seule commande en liste": "Genera programmi con un unico comando di lista",
-        "Général": "Principale",
         "Jamais": "Jamais",
         "Mode démo (appareils simulés)": "Modalità demo (dispositivi simulati)",
-        "Paramètres": "Impostazioni",
+        "Paramètres généraux": "Parametri generali",
         "Pièce par défaut pour les appareils": "Parte predefinita per i dispositivi",
+        "Programmes": "Programmi",
         "Redirect URI": "Reindirizzamento URI",
-        "Récupérez ce paramètre sur le site Home Connect (https:\/\/developer.home-connect.com\/applications)": "Recuperare questo parametro dal sito web di Home Connect (https:\/\/developer.home-connect.com\/applications)",
-        "Récupérez ce paramètre sur le site Home Connect (https:\/\/developer.home-connect.com\/applications) dans le carré API Web Client": "Recuperare questo parametro dal sito Home Connect (https:\/\/developer.home-connect.com\/applications) nel quadrato API del client Web",
+        "Renseignez les identifiants OAuth puis autorisez Jeedom depuis votre compte Home Connect.": "Inserisci le credenziali OAuth, quindi autorizza Jeedom dal tuo account Home Connect.",
+        "Récupérez ce paramètre dans le carré API Web Client du site Home Connect.": "Recupera questa impostazione nella sezione API Web Client del sito Home Connect.",
+        "Récupérez ce paramètre sur le site Home Connect.": "Recupera questa impostazione sul sito Home Connect.",
         "Se connecter": "Connettiti",
-        "Source": "Sorgente",
         "Toutes les 10 minutes": "Ogni 10 minuti",
         "Toutes les 15 minutes": "Ogni 15 minuti",
         "Toutes les 20 minutes": "Ogni 20 minuti",
@@ -1282,6 +1338,7 @@
         "Toutes les 55 minutes": "Ogni 55 minuti",
         "Toutes les heures": "Ogni ora",
         "Toutes les minutes": "Ogni minuto",
-        "Version": "Versione"
+        "Version": "Versione",
+        "caractères (max. 128)": "caratteri (max. 128)"
     }
 }
