@@ -24,6 +24,7 @@ class homeconnect extends eqLogic {
 
     /** *************************** Constantes ******************************** */
 
+    public static $_pluginVersion = '2026-07-18';
     const API_AUTH_URL = "/security/oauth/authorize"; //?client_id=XXX&redirect_uri=XXX&response_type=code&scope=XXX&state=XXX
     const API_TOKEN_URL = "/security/oauth/token"; //client_id=XXX&redirect_uri=XXX&grant_type=authorization_code&code=XXX
     const API_REQUEST_URL = "/api/homeappliances";
@@ -77,10 +78,9 @@ class homeconnect extends eqLogic {
         if (isset($tableData[$_key])) {
             return $tableData[$_key][$_detail];
         } else {
-            return $_key;
             log::add(__CLASS__, 'debug', __FUNCTION__ . __(' La clé ', __FILE__) . $_key . __(' est introuvable', __FILE__));
+            return $_key;
         }
-        return false;
     }
 
     public static function deamon_info() {
@@ -156,25 +156,15 @@ class homeconnect extends eqLogic {
          * @return	 		bool		Etat du démon
          */
         log::add('homeconnectd', 'info', __('Arrêt du service homeconnect', __FILE__));
-        $cmd = '/homeconnectd.php';
-        exec('sudo kill -9 $(ps aux | grep "' . $cmd . '" | awk \'{print $2}\')');
-        sleep(1);
-        exec('sudo kill -9 $(ps aux | grep "' . $cmd . '" | awk \'{print $2}\')');
-        sleep(1);
-        $deamon_info = self::deamon_info();
-        if ($deamon_info['state'] == 'ok') {
-            exec('sudo kill -9 $(ps aux | grep "' . $cmd . '" | awk \'{print $2}\')');
-            sleep(1);
-        } else {
-            return true;
+        foreach (system::ps('homeconnectd.php') as $process) {
+            if (isset($process['pid']) && is_numeric($process['pid'])) {
+                system::kill((int) $process['pid']);
+            }
         }
-        $deamon_info = self::deamon_info();
-        if ($deamon_info['state'] == 'ok') {
-            exec('sudo kill -9 $(ps aux | grep "' . $cmd . '" | awk \'{print $2}\')');
-            sleep(1);
-            return true;
-        }
+        sleep(1);
+        $stopped = self::deamon_info()['state'] !== 'ok';
         log::add('homeconnectd', 'info', __('Service homeconnect arrêté', __FILE__));
+        return $stopped;
     }
 
     public static function baseUrl() {
@@ -196,7 +186,7 @@ class homeconnect extends eqLogic {
          *
          * @return	 		string		URL contenant la requête
          */
-        return http_build_query($params, null, '&', PHP_QUERY_RFC3986);
+        return http_build_query($params, '', '&', PHP_QUERY_RFC3986);
     }
 
     public static function lastSegment($separator, $key) {
@@ -236,7 +226,11 @@ class homeconnect extends eqLogic {
          * @return	$result		array		Résultat de la requête (json)
          */
         $ch = curl_init(self::baseUrl() . $url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
 
         $requestHeaders = array(
@@ -258,6 +252,11 @@ class homeconnect extends eqLogic {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
         $result = curl_exec($ch);
+        if ($result === false) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            throw new RuntimeException(__('Erreur réseau Home Connect : ', __FILE__) . $error);
+        }
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -267,11 +266,11 @@ class homeconnect extends eqLogic {
         log::add(__CLASS__, 'debug', __('Nombre de requêtes envoyées aujourd\'hui ', __FILE__) . $totalRequests);
 
         if ($code == '200' || $code == '204') {
-            log::add(__CLASS__, 'debug', __('La requête ', __FILE__) . $method . ' : ' . $url . __(' a réussi, code ', __FILE__) . $code . __(', résultat ', __FILE__) . $result);
+            log::add(__CLASS__, 'debug', __('La requête ', __FILE__) . $method . ' : ' . $url . __(' a réussi, code ', __FILE__) . $code);
             return $result;
         } else {
             // Traitement des erreurs
-            log::add(__CLASS__, 'debug', __('La requête ', __FILE__) . $method . ' : ' . $url . __(' a retourné un code d\'erreur ', __FILE__) . $code . __(', résultat ', __FILE__) . $result);
+            log::add(__CLASS__, 'debug', __('La requête ', __FILE__) . $method . ' : ' . $url . __(' a retourné un code d\'erreur ', __FILE__) . $code);
             switch ($code) {
                 case 400:
                     // "Bad Request", desc: "Error occurred (e.g. validation error - value is out of range)"
@@ -402,7 +401,7 @@ class homeconnect extends eqLogic {
             $parameters['redirect_uri'] = self::API_CLIENT_HC;
         } else {
             $parameters['scope'] = implode(' ', ['IdentifyAppliance', 'Monitor', 'Settings', 'Control']);
-            $parameters['redirect_uri'] = trim(network::getNetworkAccess('external')) . '/plugins/homeconnect/x.php?k=' . jeedom::getApiKey('homeconnect');
+            //$parameters['redirect_uri'] = trim(network::getNetworkAccess('external')) . '/plugins/homeconnect/x.php?k=' . jeedom::getApiKey('homeconnect');
             $parameters['client_id'] = trim(config::byKey('client_id', 'homeconnect', '', true));
         }
         $parameters['response_type'] = 'code';
@@ -412,7 +411,7 @@ class homeconnect extends eqLogic {
         cache::set('homeconnect::state', $state, 600);
         // Construction de l'url.
         $url = $authorizationUrl . "?" . self::buildQueryString($parameters);
-        log::add(__CLASS__, 'debug', "Url : " . $url);
+        log::add(__CLASS__, 'debug', "Url : " . $authorizationUrl);
         log::add(__CLASS__, 'debug', __('Fin ', __FILE__) . __FUNCTION__);
         return $url;
     }
@@ -435,7 +434,8 @@ class homeconnect extends eqLogic {
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_HEADER => true,
             CURLINFO_HEADER_OUT => true
         );
@@ -449,7 +449,7 @@ class homeconnect extends eqLogic {
             // Récupération du message d'erreur pour log.
             preg_match("/[\{].*[\}]/", $response, $matches);
             log::add(__CLASS__, 'debug', __('Erreur : Code erreur ', __FILE__) . $info['http_code'] . ' : ' . print_r($matches, true));
-            throw new Exception("Erreur : " . print_r($matches));
+            throw new Exception("Erreur : " . print_r($matches, true));
             return;
         }
 
@@ -461,7 +461,7 @@ class homeconnect extends eqLogic {
 
             if ($explode[0] == "code") {
                 config::save('auth', $explode[1], 'homeconnect');
-                log::add(__CLASS__, 'debug', __('Code d\'autorisation récupéré ', __FILE__) . $explode[1]);
+                log::add(__CLASS__, 'debug', __('Code d\'autorisation récupéré', __FILE__));
                 homeconnect::tokenRequest();
             }
         }
@@ -497,27 +497,27 @@ class homeconnect extends eqLogic {
         $parameters['client_id'] = $clientId;
         if (!config::byKey('demo_mode', 'homeconnect')) {
             $parameters['client_secret'] = trim(config::byKey('client_secret', 'homeconnect', '', true));
-            $parameters['redirect_uri'] = trim(network::getNetworkAccess('external')) . '/plugins/homeconnect/x.php?k=' . jeedom::getApiKey('homeconnect');
+            //$parameters['redirect_uri'] = trim(network::getNetworkAccess('external')) . '/plugins/homeconnect/x.php?k=' . jeedom::getApiKey('homeconnect');
         } else {
             $parameters['redirect_uri'] = self::API_CLIENT_HC;
         }
         $parameters['grant_type'] = 'authorization_code';
         $parameters['code'] = urldecode(config::byKey('auth', 'homeconnect'));
-        log::add(__CLASS__, 'debug', "Post fields : " . self::buildQueryString($parameters));
+        log::add(__CLASS__, 'debug', "OAuth grant type : " . $parameters['grant_type']);
 
         // Récupération du Token.
         $curl = curl_init();
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_HTTPHEADER => array('Content-Type: application/x-www-form-urlencoded'),
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => self::buildQueryString($parameters)
         );
         curl_setopt_array($curl, $options);
         $response = json_decode(curl_exec($curl) , true);
-        log::add(__CLASS__, 'debug', "Response = " . print_r($response, true));
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
@@ -541,12 +541,9 @@ class homeconnect extends eqLogic {
         config::save('expires_in', $expires_in, 'homeconnect');
         config::save('id_token', $response['id_token'], 'homeconnect');
 
-        log::add(__CLASS__, 'debug', 'Access token : ' . $response['access_token']);
-        log::add(__CLASS__, 'debug', 'Refresh token : ' . $response['refresh_token']);
         log::add(__CLASS__, 'debug', 'Token type : ' . $response['token_type']);
         log::add(__CLASS__, 'debug', 'Scope : ' . $response['scope']);
         log::add(__CLASS__, 'debug', 'Expires in : ' . $expires_in);
-        log::add(__CLASS__, 'debug', 'Id token : ' . $response['id_token']);
         log::add(__CLASS__, 'debug', __('Fin ', __FILE__) . __FUNCTION__);
     }
 
@@ -576,20 +573,20 @@ class homeconnect extends eqLogic {
             $parameters['client_secret'] = trim(config::byKey('client_secret', 'homeconnect', '', true));
         }
         $parameters['refresh_token'] = config::byKey('refresh_token', 'homeconnect', '', true);
-        log::add(__CLASS__, 'debug', "Post fields : " . json_encode($parameters));
+        log::add(__CLASS__, 'debug', "OAuth grant type : " . $parameters['grant_type']);
 
         // Récupération du Token.
         $curl = curl_init();
         $options = array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => self::buildQueryString($parameters)
         );
         curl_setopt_array($curl, $options);
         $response = json_decode(curl_exec($curl) , true);
-        log::add(__CLASS__, 'debug', "Response : " . print_r($response, true));
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
@@ -619,12 +616,9 @@ class homeconnect extends eqLogic {
         config::save('expires_in', $expires_in, 'homeconnect');
         config::save('id_token', $response['id_token'], 'homeconnect');
 
-        log::add(__CLASS__, 'debug', 'Access token : ' . $response['access_token']);
-        log::add(__CLASS__, 'debug', 'Refresh token : ' . $response['refresh_token']);
         log::add(__CLASS__, 'debug', 'Token type : ' . $response['token_type']);
         log::add(__CLASS__, 'debug', 'Scope : ' . $response['scope']);
         log::add(__CLASS__, 'debug', 'Expires in : ' . $expires_in);
-        log::add(__CLASS__, 'debug', 'Id token : ' . $response['id_token']);
         log::add(__CLASS__, 'debug', __('Fin ', __FILE__) . __FUNCTION__);
     }
 
@@ -920,7 +914,7 @@ class homeconnect extends eqLogic {
                 if (is_object($cmd)) {
                     $eqLogic->checkAndUpdateCmd($cmd, $key['connected']);
 
-                    log::add(__CLASS__, 'debug', __('MAJ du status connected ', __FILE__) . $eqLogic->getConfiguration('type', '') . ' ' . $eqLogic->getConfiguration('haId', '') . __(' Valeur : ', __FILE__) . $key['connected'] ? __('Oui', __FILE__) : __('Non', __FILE__));
+                    log::add(__CLASS__, 'debug', __('MAJ du status connected ', __FILE__) . $eqLogic->getConfiguration('type', '') . ' ' . $eqLogic->getConfiguration('haId', '') . __(' Valeur : ', __FILE__) . ($key['connected'] ? __('Oui', __FILE__) : __('Non', __FILE__)));
 
                 } else {
                     log::add(__CLASS__, 'debug', __('Erreur : La commande connected n\'existe pas ', __FILE__) . $eqLogic->getConfiguration('type', '') . ' ' . $eqLogic->getConfiguration('haId', ''));
@@ -1058,7 +1052,7 @@ class homeconnect extends eqLogic {
                         }
                         $eqLogic->updateInfoCmdValue($cmdLogicalId, $items);
                     } else {
-                        log::add(__CLASS__, 'debug', __('L\'appareil n\'existe pas ou n\'est pas activé ', __FILE__) . $array['haId']);
+                        log::add(__CLASS__, 'debug', __('L\'appareil n\'existe pas ou n\'est pas activé ', __FILE__) . $evenement['haId']);
                     }
                 }
             }
@@ -1208,7 +1202,7 @@ class homeconnect extends eqLogic {
                     $cmd->setConfiguration('step', $cmdData['constraints']['stepsize']);
                     $arr['step'] = $cmdData['constraints']['stepsize'];
                 } else {
-                    $$arr['step'] = 1;
+                    $arr['step'] = 1;
                 }
                 /*if ($cmd->getConfiguration('maxValue') >= 1000) {
                 $arr['bigstep'] = 900;
@@ -1618,7 +1612,7 @@ class homeconnect extends eqLogic {
                                 $cmd->setConfiguration('step', $optionData['constraints']['stepsize']);
                                 $arr['step'] = $optionData['constraints']['stepsize'];
                             } else {
-                                $$arr['step'] = 1;
+                                $arr['step'] = 1;
                             }
                             /*if ($cmd->getConfiguration('maxValue') >= 1000) {
                             $arr['bigstep'] = 900;
@@ -1785,7 +1779,10 @@ class homeconnect extends eqLogic {
                 // Pas de programme actif
                 // A voir : mettre à jour les autres commandes (états et réglages)
                 log::add(__CLASS__, 'debug', __('Pas de key ou key = SDK.Error.NoProgram ', __FILE__) . $programType);
-                $this->checkAndUpdateCmd($nameCmd, __('Aucun', __FILE__));
+                $cmdNone = $this->getCmd('info', $nameCmd);
+                if (is_object($cmdNone)) {
+                    $this->checkAndUpdateCmd($cmdNone, __('Aucun', __FILE__));
+                }
             }
         } else {
             log::add(__CLASS__, 'debug', __('Dans lookProgram request a retourné faux', __FILE__));
@@ -1811,7 +1808,7 @@ class homeconnect extends eqLogic {
 
             if (isset($programdata['data']['key'])) {
                 $actionCmd = $this->createActionCmd($programdata['data'], 'programs/' . strtolower($programType), 'Program');
-                log::add(__CLASS__, 'debug', __FUNCTION__ . __(' Création commande action Programme disponible ', __FILE__) . json_encode($programName['data']));
+                log::add(__CLASS__, 'debug', __FUNCTION__ . __(' Création commande action Programme disponible ', __FILE__) . json_encode($programdata['data']));
                 if ($programType == 'Selected' || $programType == 'Active') {
                     $infoCmd = $this->getCmd('info', 'GET::BSH.Common.Root.' . $programType . 'Program');
                     if (is_object($infoCmd)) {
@@ -1866,7 +1863,7 @@ class homeconnect extends eqLogic {
                     $configOpt = array_merge($opt, $cmdProgram->getConfiguration('listOptions', array()));
                     $configOpt = array_unique($configOpt);
                     $cmdProgram->setConfiguration('listOptions', $configOpt)->save();
-                    log::add(__CLASS__, 'debug', __('Ajout des options disponibles dans la commande PUT::', __FILE__). $programKey . ' ' . print_r($configOpt, true));
+                    log::add(__CLASS__, 'debug', __('Ajout des options disponibles dans la commande PUT::', __FILE__). $_key . ' ' . print_r($configOpt, true));
                 }
             }
         }

@@ -1,4 +1,4 @@
-#!/usr/
+#!/usr/bin/env php
 <?php
 require_once dirname(__FILE__) . '/../core/class/homeconnect.class.php';
 
@@ -6,7 +6,11 @@ require_once dirname(__FILE__) . '/../core/class/homeconnect.class.php';
 
     try {
         $ch = curl_init(homeconnect::baseUrl() . homeconnect::API_EVENTS_URL);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'homeconnect::getEvents');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         $requestHeaders = [
@@ -15,12 +19,15 @@ require_once dirname(__FILE__) . '/../core/class/homeconnect.class.php';
             "Cache-Control: no-cache",
             "Connection: keep-alive",
             "Keep-Alive: 120",
-            "Host: api.home-connect.com",
+            "Host: " . parse_url(homeconnect::baseUrl(), PHP_URL_HOST),
             "Accept-Language: " . config::byKey('language', 'core', 'fr_FR'),
             "Authorization: Bearer " . config::byKey('access_token','homeconnect'),
         ];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeaders);
         $result = curl_exec($ch);
+        if ($result === false) {
+            throw new RuntimeException('Home Connect SSE: ' . curl_error($ch));
+        }
         $req_data = curl_getinfo($ch);
         curl_close($ch);
         $totalRequests = intval(cache::byKey('homeconnect::requests::total')->getValue());

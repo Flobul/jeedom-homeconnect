@@ -2,10 +2,6 @@
 require_once dirname(__FILE__) . "/../../../../core/php/core.inc.php";
 include_file('core', 'authentification', 'php');
 log::add('homeconnect', 'debug',"┌────────── Callback");
-log::add('homeconnect', 'debug',"│ state = " . init('state'));
-log::add('homeconnect', 'debug',"│ stored state = " . $_SESSION['oauth2state']);
-log::add('homeconnect', 'debug',"│ code = " . init('code'));
-log::add('homeconnect', 'debug',"│ apikey = " . init('apikey'));
 
 if (!jeedom::apiAccess(init('apikey'), 'homeconnect')) {
 	echo 'Clef API non valide, vous n\'êtes pas autorisé à effectuer cette action';
@@ -17,7 +13,8 @@ if (!cache::exist('homeconnect::state')) {
 }
 $state = cache::byKey('homeconnect::state')->getValue();
 
-if (empty($_GET['state']) || !isset($state) || $_GET['state'] !== $state) {
+$receivedState = (string) init('state');
+if ($receivedState === '' || !is_string($state) || !hash_equals($state, $receivedState)) {
 	if (cache::exist('homeconnect::state')) {
         cache::delete('homeconnect::state');
     }
@@ -25,8 +22,12 @@ if (empty($_GET['state']) || !isset($state) || $_GET['state'] !== $state) {
 }
 cache::delete('homeconnect::state');
 
-config::save('auth', init('code'), 'homeconnect');
-log::add('homeconnect', 'debug', "│ Code d'authorisation sauvegardé (".init('code').").");
+$code = (string) init('code');
+if ($code === '') {
+	throw new Exception(__('Code d\'autorisation manquant', __FILE__));
+}
+config::save('auth', $code, 'homeconnect');
+log::add('homeconnect', 'debug', "│ Code d'autorisation sauvegardé.");
 homeconnect::tokenRequest();
 log::add('homeconnect', 'debug',"└────────── Fin de Callback");
 redirect(trim(network::getNetworkAccess('external')) . '/index.php?v=d&p=plugin&id=homeconnect');

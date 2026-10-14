@@ -8,18 +8,29 @@
 			var m = Math.floor(duree/60);
 			var s = duree%60;
 			var txt = '';
-			if (j) txt += j + 'j ';
-			if (h) txt += h + 'h ';
-			if (m) txt += m + 'min ';
-			if (s) txt += s + 's ';
-			$('.cmd[data-cmd_id=#id#]').attr('title','Valeur du '+_options.valueDate+', collectée le '+_options.collectDate)
-			$('.cmd[data-cmd_id=#id#] .state').empty().append(txt +' (' + _options.display_value +'#unite#)');
+			if (j) txt += j + '{{j}} ';
+			if (h) txt += h + '{{h}} ';
+			if (m) txt += m + '{{min}} ';
+			if (s) txt += s + '{{s}} ';
+			var cmd = document.querySelector('.cmd[data-cmd_uid=#uid#]');
+			if (cmd) {
+				cmd.setAttribute('title', '{{Valeur du}}' + _options.valueDate + ', {{collectée le}}' + _options.collectDate);
+			}
+			var stateEl = document.querySelector('.cmd[data-cmd_uid=#uid#] .state');
+			if (stateEl) {
+				stateEl.innerHTML = txt + ' (' + _options.display_value + '#unite#');
+			}
 			if(_options.alertLevel){
-				$('.cmd[data-cmd_id=#id#]').removeClass('label label-warning label-danger')
 				if(_options.alertLevel == 'warning'){
-					$('.cmd[data-cmd_id=#id#]').addClass('label label-warning');
+					if (cmd) {
+						cmd.classList.add('label', 'label-warning');
+						cmd.classList.remove('label-danger');
+					}
 				}else if(_options.alertLevel == 'danger'){
-					$('.cmd[data-cmd_id=#id#]').addClass('label label-danger');
+					if (cmd) {
+						cmd.classList.add('label', 'label-danger');
+						cmd.classList.remove('label-warning');
+					}
 				}
 			}
 		}
