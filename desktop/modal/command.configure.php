@@ -51,26 +51,26 @@ $jsonPresent = false;
               <div class="form-group">
                 <label class="col-xs-3 control-label">{{Path}}</label>
                 <div class="col-xs-9">
-                	<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="path" placeholder="{{Chemin}}" title="{{Chemin}}" style="display:inline-block"></input>
+                    <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="path" placeholder="{{Chemin}}" data-title="{{Chemin}}" style="display:inline-block"></input>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-xs-3 control-label">{{Key}}</label>
                 <div class="col-xs-9">
-                	<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="key" placeholder="{{Clé}}" title="{{Clé}}" style="display:inline-block"></input>
+                    <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="key" placeholder="{{Clé}}" data-title="{{Clé}}" style="display:inline-block"></input>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-xs-3 control-label">{{Category}}</label>
                 <div class="col-xs-9">
-                	<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="category" placeholder="{{Catégorie}}" title="{{Catégorie}}" style="display:inline-block"></input>
+                    <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="category" placeholder="{{Catégorie}}" data-title="{{Catégorie}}" style="display:inline-block"></input>
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-xs-3 control-label">{{Value}}</label>
                 <div class="col-xs-9">
-                    <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}" title="{{Valeur}}" style="display:inline-block"></input>
+                    <input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="value" placeholder="{{Valeur}}" data-title="{{Valeur}}" style="display:inline-block"></input>
                 </div>
               </div>
 

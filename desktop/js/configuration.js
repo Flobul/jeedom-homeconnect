@@ -1,5 +1,7 @@
 
 
+/* global modifyWithoutSave */
+
 // Utilitaire AJAX vanilla JS
 function homeconnectAjax(data, successCallback, errorCallback) {
     var formData = new FormData();
@@ -83,7 +85,7 @@ if (divPluginConfiguration) {
             document.querySelectorAll('.bt_plugin_conf_view_log').forEach(function(element) {
                 var filename = element.getAttribute('data-log');
                 logPluginLeveltoStr = logPluginLeveltoStr.replace("log::level::" + plugin, "log::level::" + filename);
-                newLogPluginLevel = JSON.parse(logPluginLeveltoStr);
+                var newLogPluginLevel = JSON.parse(logPluginLeveltoStr);
                 jeedom.config.save({
                     configuration: newLogPluginLevel,
                     error: function(error) {
