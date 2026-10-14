@@ -1125,6 +1125,38 @@
     "plugins\/homeconnect\/core\/php\/callback.php": {
         "Code d\\'autorisation manquant": "Authorization code missing"
     },
+    "plugins\/homeconnect\/core\/template\/dashboard\/cmd.info.numeric.duree.html": {
+        "Valeur du": "Value of the",
+        "collectée le": "collected on",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
+    "plugins\/homeconnect\/core\/template\/dashboard\/cmd.info.numeric.dureev3.html": {
+        "Valeur du": "Value of the",
+        "collectée le": "collected on",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
+    "plugins\/homeconnect\/core\/template\/mobile\/cmd.info.numeric.duree.html": {
+        "Valeur du": "Value of the",
+        "collectée le": "collected on",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
+    "plugins\/homeconnect\/core\/template\/mobile\/cmd.info.numeric.dureev3.html": {
+        "Valeur du": "Value of the",
+        "collectée le": "collected on",
+        "h": "h",
+        "j": "j",
+        "min": "min",
+        "s": "s"
+    },
     "plugins\/homeconnect\/desktop\/js\/configuration.js": {
         "Connexion au compte HomeConnect réussie.": "Successfully logged into your HomeConnect account.",
         "Connexion en cours...": "Logging in...",
@@ -1138,6 +1170,9 @@
         "Se connecter": "Get connected",
         "Vous allez être redirigé vers HomeConnect pour autoriser l\\'accès de Jeedom à votre compte.": "You will be redirected to HomeConnect to authorize Jeedom's access to your account.",
         "effectuée": "carried out"
+    },
+    "plugins\/homeconnect\/desktop\/js\/health.js": {
+        "Santé Home Connect": "Health Home Connect"
     },
     "plugins\/homeconnect\/desktop\/js\/homeconnect.js": {
         "Afficher": "Show",
@@ -1199,11 +1234,28 @@
         "Value": "Value"
     },
     "plugins\/homeconnect\/desktop\/modal\/health.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized access",
         "Appareil": "Device",
+        "Appareils": "Devices",
+        "Aucun appareil Home Connect": "No Home Connect devices",
         "Connecté": "Connected",
-        "Nombre de requêtes envoyées aujourd'hui": "Number of requests sent today",
+        "Connectés": "Connected",
+        "Connexion des appareils, programmes actifs et suivi des requêtes Home Connect.": "Device connectivity, active schedules, and tracking of Home Connect requests.",
+        "Diagnostic du plugin": "Plugin Diagnostics",
+        "Non": "No",
+        "Oui": "Yes",
         "Programme actif": "Active program",
-        "Type": "Type"
+        "Programmes actifs": "Active Programs",
+        "Rafraîchir": "Refresh",
+        "Requêtes aujourd'hui": "Today's Queries",
+        "Résumé de la santé Home Connect": "Home Connect Health Summary",
+        "Santé Home Connect": "Health Home Connect",
+        "Type": "Type",
+        "appareil(s) en cours": "device(s) in progress",
+        "configuré(s)": "configured",
+        "déconnecté(s)": "offline",
+        "sur 1000": "out of 1,000",
+        "Équipements": "Equipment"
     },
     "plugins\/homeconnect\/desktop\/php\/homeconnect.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
@@ -1241,34 +1293,38 @@
         "Visible": "Visible"
     },
     "plugins\/homeconnect\/plugin_info\/configuration.php": {
-        "Ajoute les programmes actifs et sélectionnés à la liste, qu'ils soient supportées ou non par l'API": "Adds selected active programs to the list, whether or not they are supported by the API",
+        "Ajoute les programmes actifs et sélectionnés à la liste, qu’ils soient supportés ou non par l’API.": "Adds active and selected programs to the list, regardless of whether they are supported by the API.",
         "Appareils réels": "Real devices",
+        "Application Home Connect et authentification": "Home Connect app and authentication",
         "Aucune": "None",
         "Auto-actualisation (cron)": "Auto-update (cron)",
-        "Branche": "Branch",
-        "Cette URL sera demandée sur le site Home Connect pour la création des identifiants (https:\/\/developer.home-connect.com\/applications\/add)": "This URL will be requested on the Home Connect site for the creation of logins (https:\/\/developer.home-connect.com\/applications\/add)",
+        "Cette URL sera demandée sur le site Home Connect pour la création des identifiants.": "This URL will be requested on the Home Connect website to create your login credentials.",
         "Changelog": "Changelog",
+        "Choisissez la pièce par défaut et la fréquence de synchronisation des appareils.": "Select the default room and the synchronization frequency for the devices.",
         "Client ID": "Customer ID",
         "Client ID pour le mode démo": "Client ID for demo mode",
         "Client Secret": "Customer Secret",
-        "Cochez la case pour n'avoir qu'une seule commande select pour afficher l'ensemble des programmes": "Check the box to have only one select command to display all programs",
+        "Cochez la case pour n’avoir qu’une seule commande select regroupant l’ensemble des programmes.": "Check the box to have a single \"select\" command that groups all the programs together.",
+        "Communauté": "Community",
+        "Configuration du plugin": "Plugin configuration",
+        "Connectez vos appareils Home Connect à Jeedom et pilotez-les depuis votre compte.": "Connect your Home Connect devices to Jeedom and control them from your account.",
+        "Contrôlez la création et le regroupement des programmes exposés dans Jeedom.": "Control the creation and grouping of programs displayed in Jeedom.",
         "Création de l'application Jeedom sur le site Home Connect": "Creation of the Jeedom application on the Home Connect website",
-        "Création des identifiants (https:\/\/developer.home-connect.com\/applications\/add)": "Create login details (https:\/\/developer.home-connect.com\/applications\/add)",
         "Créer Application": "Create Application",
         "Documentation": "Documentation",
         "Démo (Simulateurs)": "Demo (Simulators)",
         "Force l'ajout de tous les programmes": "Force all programs to be added",
         "Génère les programmes dans une seule commande en liste": "Generates programs in a single command list",
-        "Général": "Main",
         "Jamais": "Never",
         "Mode démo (appareils simulés)": "Demo mode (simulated devices)",
-        "Paramètres": "Settings",
+        "Paramètres généraux": "General settings",
         "Pièce par défaut pour les appareils": "Default room for devices",
+        "Programmes": "Programs",
         "Redirect URI": "Redirect URI",
-        "Récupérez ce paramètre sur le site Home Connect (https:\/\/developer.home-connect.com\/applications)": "Retrieve this parameter from the Home Connect website (https:\/\/developer.home-connect.com\/applications)",
-        "Récupérez ce paramètre sur le site Home Connect (https:\/\/developer.home-connect.com\/applications) dans le carré API Web Client": "Retrieve this parameter from the Home Connect site (https:\/\/developer.home-connect.com\/applications) in the API Web Client square",
+        "Renseignez les identifiants OAuth puis autorisez Jeedom depuis votre compte Home Connect.": "Enter your OAuth credentials, then authorize Jeedom from your Home Connect account.",
+        "Récupérez ce paramètre dans le carré API Web Client du site Home Connect.": "Retrieve this setting from the Web Client API section on the Home Connect website.",
+        "Récupérez ce paramètre sur le site Home Connect.": "Retrieve this setting from the Home Connect website.",
         "Se connecter": "Get connected",
-        "Source": "Source",
         "Toutes les 10 minutes": "Every 10 minutes",
         "Toutes les 15 minutes": "Every 15 minutes",
         "Toutes les 20 minutes": "Every 20 minutes",
@@ -1282,6 +1338,7 @@
         "Toutes les 55 minutes": "Every 55 minutes",
         "Toutes les heures": "Every hour",
         "Toutes les minutes": "Every minute",
-        "Version": "Version"
+        "Version": "Version",
+        "caractères (max. 128)": "characters (max. 128)"
     }
 }
