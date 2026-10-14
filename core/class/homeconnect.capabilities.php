@@ -2581,13 +2581,6 @@ class homeconnect_capabilities {
                     'Hob'
                 ) ,
             ) ,
-            'Cooking.Hob.Program.PowerLevelMode' => array(
-                'name' => __("Mode niveau de puissance", __FILE__) ,
-                'action' => 'Program',
-                'available' => array(
-                    'Hob'
-                ) ,
-            ) ,
             'Cooking.Hob.Program.PowerMoveMode' => array(
                 'name' => __("Mode puissance maximale", __FILE__) ,
                 'action' => 'Program',
@@ -2939,20 +2932,6 @@ class homeconnect_capabilities {
             ) ,
             'Cooking.Oven.Program.HeatingMode.FullSurfaceGrill' => array(
                 'name' => __("Grill surface totale", __FILE__) ,
-                'action' => 'Program',
-                'available' => array(
-                    'Oven'
-                )
-            ) ,
-            'Cooking.Oven.Program.HeatingMode.GrillLargeArea' => array(
-                'name' => __("Grill grande surface", __FILE__) ,
-                'action' => 'Program',
-                'available' => array(
-                    'Oven'
-                )
-            ) ,
-            'Cooking.Oven.Program.HeatingMode.GrillSmallArea' => array(
-                'name' => __("Grill petite surface", __FILE__) ,
                 'action' => 'Program',
                 'available' => array(
                     'Oven'
@@ -3820,22 +3799,6 @@ class homeconnect_capabilities {
             ) ,
             'LaundryCare.Dryer.Program.Cotton' => array(
                 'name' => __("Coton", __FILE__) ,
-                'action' => 'Program',
-                'available' => array(
-                    'Dryer',
-                    'WasherDryer'
-                )
-            ) ,
-            'LaundryCare.Dryer.Program.Cotton.Eco4060' => array(
-                'name' => __("Coton éco 40-60 °C", __FILE__) ,
-                'action' => 'Program',
-                'available' => array(
-                    'Dryer',
-                    'WasherDryer'
-                )
-            ) ,
-            'LaundryCare.Dryer.Program.EasyCare.EasyCare' => array(
-                'name' => __("Entretien facile", __FILE__) ,
                 'action' => 'Program',
                 'available' => array(
                     'Dryer',
@@ -4878,14 +4841,6 @@ class homeconnect_capabilities {
             ) ,
             'LaundryCare.Washer.Program.Super153045.Super15' => array(
                 'name' => __("Express 15 min.", __FILE__) ,
-                'action' => 'Program',
-                'available' => array(
-                    'Washer',
-                    'WasherDryer'
-                )
-            ) ,
-            'LaundryCare.Washer.Program.Super153045.Super15' => array(
-                'name' => __("Express 30 min.", __FILE__) ,
                 'action' => 'Program',
                 'available' => array(
                     'Washer',
@@ -7403,7 +7358,7 @@ class homeconnect_capabilities {
 					        'Dishwasher'
 					    ) ,
 					) ,
-					'BSH.Common.EnumType.AmbientLightColor.Color14' => array(
+					'BSH.Common.EnumType.AmbientLightColor.Color34' => array(
 					    'name' => __("Couleur 34", __FILE__) ,
 					    'action' => 'Status',
 					    'available' => array(
@@ -7411,7 +7366,7 @@ class homeconnect_capabilities {
 					        'Dishwasher'
 					    ) ,
 					) ,
-					'BSH.Common.EnumType.AmbientLightColor.Color15' => array(
+					'BSH.Common.EnumType.AmbientLightColor.Color35' => array(
 					    'name' => __("Couleur 35", __FILE__) ,
 					    'action' => 'Status',
 					    'available' => array(

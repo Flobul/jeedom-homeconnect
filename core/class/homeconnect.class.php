@@ -1011,6 +1011,7 @@ class homeconnect extends eqLogic {
         foreach ($events as $evenement) {
             if ($evenement['data'] && isset($evenement['data']['items'])) {
                 foreach ($evenement['data']['items'] as $items) {
+                    $path = '';
                     $eqLogic = eqLogic::byLogicalId($evenement['haId'], 'homeconnect');
                     if (is_object($eqLogic) && $eqLogic->getIsEnable()) {
                         $cat = 'Option';

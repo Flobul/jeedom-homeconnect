@@ -103,7 +103,7 @@ if (commandTableBody && typeof Sortable !== 'undefined') {
  */
 function addCmdToTable(_cmd) {
   if (!isset(_cmd)) {
-    var _cmd = {configuration: {}};
+    _cmd = {configuration: {}};
   }
   if (!isset(_cmd.configuration)) {
     _cmd.configuration = {};
