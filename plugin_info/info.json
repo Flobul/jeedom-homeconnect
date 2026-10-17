@@ -10,7 +10,7 @@
 		"de_DE": "Plugin, mit dem über die offizielle API Informationen von kompatiblen Haushaltsgeräten (Bosch, Siemens, Gaggenau, Neff, Thermador, Balay, Constructa, Pistsos, Profilo) abgerufen und diese über Jeedom gesteuert werden können (je nach Gerätetyp eingeschränkte Möglichkeiten).",
 		"it_IT": "Plugin che consente di recuperare le informazioni, tramite l'API ufficiale, dagli elettrodomestici compatibili (Bosch, Siemens, Gaggenau, Neff, Thermador, Balay, Constructa, Pistsos, Profilo) e di controllarli da Jeedom (possibilità limitata a seconda del tipo di dispositivo)."
 	},
-	"licence": "AGPL",
+	"licence": "GPL-3.0",
 	"installation": "Vérifiez bien que vous avez correctement configuré la partie Générale -> Administration -> Configuration puis onglets Réseaux, en effet il faut lors de l'association de Jeedom au compte Home Connect que votre Jeedom soit accessible de l'extérieur.",
 	"author": "Sartog (modifié par Flobul)",
 	"require": "4.4",
