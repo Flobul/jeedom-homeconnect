@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "plugin_id": "homeconnect",
+  "class_file": "core/class/homeconnect.class.php",
+  "reference_version": "2026-07-18",
+  "reference_commit": "bc8b2c36dc8970a0838e636b1a77acb6947e459d"
+}
