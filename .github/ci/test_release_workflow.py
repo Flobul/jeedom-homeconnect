@@ -101,6 +101,12 @@ class ReleaseWorkflowTests(unittest.TestCase):
         self.assertIn("name: CI", orchestrator)
         self.assertIn("uses: ./.github/workflows/check-jeedom.yml", orchestrator)
 
+    def test_central_dispatch_targets_current_repository(self):
+        text = WORKFLOW.read_text(encoding="utf-8")
+        config = json.loads((ROOT / ".github" / "ci" / "ci-config.json").read_text())
+        expected = config["plugin"]["repository"]
+        self.assertIn(f'"folder": "{expected}"', text)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
