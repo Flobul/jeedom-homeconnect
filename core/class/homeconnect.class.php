@@ -22,6 +22,35 @@ require_once __DIR__ . '/../../../../plugins/homeconnect/core/class/homeconnect.
 
 class homeconnect extends eqLogic {
 
+    /**
+     * Return privacy-safe aggregate diagnostics for a Community support post.
+     */
+    public static function getConfigForCommunity($_separator = '<br>')
+    {
+        $equipments = eqLogic::byType(__CLASS__);
+        $enabled = 0;
+        $commands = 0;
+
+        foreach ($equipments as $equipment) {
+            if ((int) $equipment->getIsEnable() === 1) {
+                $enabled++;
+            }
+            $equipmentCommands = $equipment->getCmd();
+            $commands += is_array($equipmentCommands) ? count($equipmentCommands) : 0;
+        }
+
+        $lines = array(
+            '<!-- JEEDOM_PLUGIN_DIAGNOSTICS_START -->',
+            __('Équipements configurés', __FILE__) . ' : ' . count($equipments),
+            __('Équipements actifs', __FILE__) . ' : ' . $enabled,
+            __('Commandes configurées', __FILE__) . ' : ' . $commands,
+            '<!-- JEEDOM_PLUGIN_DIAGNOSTICS_END -->'
+        );
+
+        return implode($_separator, $lines) . $_separator;
+    }
+
+
     /** *************************** Constantes ******************************** */
 
     public static $_pluginVersion = '2026-07-18';

@@ -2,6 +2,7 @@
 
 ## Non publié
 
+- Ajout d’un accès natif à Community Jeedom avec diagnostic agrégé et anonymisé.
 ## Version 2026-10-14 (14/10/2026)
 
 - Refonte de la structure du code afin d'améliorer sa lisibilité et sa maintenabilité

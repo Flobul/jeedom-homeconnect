@@ -11,6 +11,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
 		<legend><i class="fas fa-cog"></i>	{{Gestion}}</legend>
 		<div class="eqLogicThumbnailContainer">
+            <?php if (version_compare((string) jeedom::version(), '4.4.0', '>=')) { ?>
+                <div class="cursor eqLogicAction logoSecondary" data-action="createCommunityPost" data-plugin_id="homeconnect" role="button" tabindex="0" aria-label="{{Créer un sujet d'assistance sur Community Jeedom}}">
+                    <i class="fas fa-comments"></i>
+                    <br>
+                    <span style="color:var(--txt-color)">{{Community}}</span>
+                </div>
+            <?php } ?>
 			<div class="cursor eqLogicAction logoSecondary" id="bt_syncHomeConnect" >
 				<i class="fas fa-sync-alt"></i>
 				<br>
@@ -191,6 +198,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 		</div>
 	</div>
 </div>
+<?php include_file('desktop', 'community', 'js', 'homeconnect'); ?>
 
 <?php include_file('desktop', 'homeconnect', 'js', 'homeconnect');?>
 <?php include_file('core', 'plugin.template', 'js');?>
