@@ -92,6 +92,8 @@ class ReleaseWorkflowTests(unittest.TestCase):
 
     def test_calendar_changelog_preserves_wordpress_history(self):
         changelog = (ROOT / "docs" / "CHANGELOG.md").read_text(encoding="utf-8")
+        # New prepared versions precede the preserved imported history.
+        changelog = changelog[changelog.index('## Version 2026-10-14 (14/10/2026)'):]
         self.assertEqual(len(re.findall(r"^## Version ", changelog, re.MULTILINE)), 20)
         self.assertEqual(len(re.findall(r"^[-*+] ", changelog, re.MULTILINE)), 24)
         self.assertEqual(len(re.findall(r"<https?://[^>]+>", changelog)), 8)

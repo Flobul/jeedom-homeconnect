@@ -53,7 +53,7 @@ class homeconnect extends eqLogic {
 
     /** *************************** Constantes ******************************** */
 
-    public static $_pluginVersion = '2026-07-18';
+    public static $_pluginVersion = '2026-11-08';
     const API_AUTH_URL = "/security/oauth/authorize"; //?client_id=XXX&redirect_uri=XXX&response_type=code&scope=XXX&state=XXX
     const API_TOKEN_URL = "/security/oauth/token"; //client_id=XXX&redirect_uri=XXX&grant_type=authorization_code&code=XXX
     const API_REQUEST_URL = "/api/homeappliances";
@@ -2233,5 +2233,39 @@ class homeconnectCmd extends cmd {
             }
         }
     }
+
+    public static function getConfigForCommunity($_separator = '<br>')
+    {
+        if (!is_string($_separator) || !in_array($_separator, array('<br>', '<br/>', '<br />', "\n"), true)) {
+            $_separator = '<br>';
+        }
+        $unknown = __('Inconnu', __FILE__);
+        $isTrue = static function ($value) { return in_array($value, array(true, 1, '1'), true); };
+        $isFalse = static function ($value) { return in_array($value, array(false, 0, '0'), true); };
+        $integer = static function ($value, $min, $max) {
+            if ((!is_int($value) && !is_string($value)) || preg_match('/^[0-9]{1,10}$/D', (string) $value) !== 1) {
+                return null;
+            }
+            $number = (int) $value;
+            return $number >= $min && $number <= $max ? $number : null;
+        };
+        $present = static function ($value) { return is_string($value) && trim($value) !== ''; };
+        $format = static function ($value, $kind, $args = array()) use ($unknown, $isTrue, $isFalse) {
+            switch ($kind) {
+                case 'bool':
+                    return $isTrue($value) ? __('Oui', __FILE__) : ($isFalse($value) ? __('Non', __FILE__) : $unknown);
+            }
+            return $unknown;
+        };
+        $equipments = eqLogic::byType(__CLASS__);
+        $equipments = is_array($equipments) ? $equipments : array();
+        $lines = array('<!-- JEEDOM_PLUGIN_DIAGNOSTICS_START -->', __('Équipements configurés', __FILE__) . ' : ' . count($equipments));
+        $lines[] = __('Mode simulateur', __FILE__) . ' : ' . $format(config::byKey('demo_mode', __CLASS__, ''), 'bool', array());
+        $lines[] = __('Liste des programmes', __FILE__) . ' : ' . $format(config::byKey('listValueProgram', __CLASS__, ''), 'bool', array());
+        $lines[] = __('Ajout forcé des programmes', __FILE__) . ' : ' . $format(config::byKey('forceAddProgram', __CLASS__, ''), 'bool', array());
+        $lines[] = '<!-- JEEDOM_PLUGIN_DIAGNOSTICS_END -->';
+        return implode($_separator, $lines) . $_separator;
+    }
+
 }
 ?>
