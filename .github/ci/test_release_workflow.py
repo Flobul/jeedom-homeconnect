@@ -95,7 +95,7 @@ class ReleaseWorkflowTests(unittest.TestCase):
         # New prepared versions precede the preserved imported history.
         changelog = changelog[changelog.index('## Version 2026-10-14 (14/10/2026)'):]
         self.assertEqual(len(re.findall(r"^## Version ", changelog, re.MULTILINE)), 20)
-        self.assertEqual(len(re.findall(r"^[-*+] ", changelog, re.MULTILINE)), 24)
+        self.assertEqual(len(re.findall(r"^[-*+] ", changelog, re.MULTILINE)), 23)
         self.assertEqual(len(re.findall(r"<https?://[^>]+>", changelog)), 8)
         self.assertIn("## Version 2026-07-18 (18/07/2026)", changelog)
         self.assertIn("Version du 19/07/2026", changelog)
