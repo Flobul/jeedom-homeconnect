@@ -1,6 +1,7 @@
 # Changelog
 
 ## Version 2026-11-08 (08/11/2026)
+## Non publié
 
 - Le brouillon Community inclut un diagnostic technique propre au plugin, agrégé et sans identifiants ni secrets, sans connexion aux appareils.
 
